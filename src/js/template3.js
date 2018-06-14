@@ -33,6 +33,8 @@
     const defaults = {
         someVar: 123,
         initClass: 'js-myplugin',
+        callbackOnInit: function() {
+        },
         callbackBefore: function () {
         },
         callbackAfter: function () {
@@ -176,7 +178,6 @@
      * @param {Object} options User settings
      */
     myPlugin.init = function (options) {
-
         // feature test
         if (!supports) return;
 
@@ -194,6 +195,8 @@
         // Listen for events
         document.addEventListener('click', eventHandler, false);
 
+        // On Init callback
+        settings.callbackOnInit().call(this);
     };
 
 

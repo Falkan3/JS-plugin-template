@@ -21,6 +21,8 @@
     // Default settings
     const defaults = {
         resizeLog: 'The window was resized!',
+        callbackOnInit: function() {
+        },
         callbackBefore: function () {
         },
         callbackAfter: function () {
@@ -125,6 +127,8 @@
         document.addEventListener('click', eventHandler, false);
         window.addEventListener('resize', eventHandler, false);
 
+        // On Init callback
+        settings.callbackOnInit().call(this);
     };
 
 

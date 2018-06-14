@@ -6,7 +6,7 @@
  */
 
 (function (root, factory) {
-    var pluginName = 'Boilerplate';
+    const pluginName = 'Boilerplate';
 
     if (typeof define === 'function' && define.amd) {
         define([], factory(pluginName));
@@ -18,8 +18,10 @@
 }(this, function (pluginName) {
     'use strict';
 
-    var defaults = {
-        someDefaultOption: 'foo'
+    const defaults = {
+        someDefaultOption: 'foo',
+        callbackOnInit: function() {
+        }
     };
 
 
@@ -28,8 +30,8 @@
      * @param {Object} defaults Default settings
      * @param {Object} options User options
      */
-    var extend = function (target, options) {
-        var prop, extended = {};
+    const extend = function (target, options) {
+        let prop, extended = {};
         for (prop in defaults) {
             if (Object.prototype.hasOwnProperty.call(defaults, prop)) {
                 extended[prop] = defaults[prop];
@@ -47,7 +49,7 @@
     /**
      * Some private helper function
      */
-    var privateFunction = function () {
+    const privateFunction = function () {
         // private helper code goes here
     };
 
@@ -61,6 +63,9 @@
     function Plugin(element, options) {
         this.element = element;
         this.options = extend(defaults, options);
+
+        // On Init callback
+        this.options.callbackOnInit().call(this);
 
         //init code goes here
         console.log('Plugin inititalized');
@@ -79,7 +84,7 @@
 
     // add lightweight jQuery wrapper, if available
     if (window.jQuery) {
-        var $ = window.jQuery;
+        const $ = window.jQuery;
 
         $.fn[pluginName] = function (options) {
             options = options || {};
