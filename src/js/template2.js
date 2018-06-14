@@ -65,7 +65,9 @@
         this.options = extend(defaults, options);
 
         // On Init callback
-        this.options.callbackOnInit().call(this);
+        if(this.options.callbackOnInit && $.isFunction(this.options.callbackOnInit)) {
+            this.options.callbackOnInit().call(this);
+        }
 
         //init code goes here
         console.log('Plugin inititalized');

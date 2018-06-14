@@ -196,7 +196,9 @@
         document.addEventListener('click', eventHandler, false);
 
         // On Init callback
-        settings.callbackOnInit().call(this);
+        if(settings.callbackOnInit && $.isFunction(settings.callbackOnInit)) {
+            settings.callbackOnInit().call(this);
+        }
     };
 
 
