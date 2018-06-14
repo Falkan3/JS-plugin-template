@@ -65,7 +65,7 @@
         this.options = extend(defaults, options);
 
         // On Init callback
-        if(this.options.callbackOnInit && $.isFunction(this.options.callbackOnInit)) {
+        if (typeof this.options.callbackOnInit === 'function') {
             this.options.callbackOnInit().call(this);
         }
 

@@ -128,7 +128,7 @@
         window.addEventListener('resize', eventHandler, false);
 
         // On Init callback
-        if(settings.callbackOnInit && $.isFunction(settings.callbackOnInit)) {
+        if (typeof settings.callbackOnInit === 'function') {
             settings.callbackOnInit().call(this);
         }
     };
