@@ -66,7 +66,7 @@
 
         // On Init callback
         if (typeof this.options.callbackOnInit === 'function') {
-            this.options.callbackOnInit().call(this);
+            this.options.callbackOnInit.call(this);
         }
 
         //init code goes here

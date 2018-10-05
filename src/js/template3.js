@@ -197,7 +197,7 @@
 
         // On Init callback
         if (typeof settings.callbackOnInit === 'function') {
-            settings.callbackOnInit().call(this);
+            settings.callbackOnInit.call(this);
         }
     };
 
