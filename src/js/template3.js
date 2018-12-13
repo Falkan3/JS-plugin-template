@@ -43,83 +43,13 @@
 
 
     //
+    // Helpers
+    //
+    myPlugin.helpers = require('modules/helpers.js');
+
+    //
     // Methods
     //
-
-    /**
-     * A simple forEach() implementation for Arrays, Objects and NodeLists
-     * @private
-     * @param {Array|Object|NodeList} collection Collection of items to iterate
-     * @param {Function} callback Callback function for each iteration
-     * @param {Array|Object|NodeList} scope Object/NodeList/Array that forEach is iterating over (aka `this`)
-     */
-    const forEach = function (collection, callback, scope) {
-        if (Object.prototype.toString.call(collection) === '[object Object]') {
-            for (let prop in collection) {
-                if (Object.prototype.hasOwnProperty.call(collection, prop)) {
-                    callback.call(scope, collection[prop], prop, collection);
-                }
-            }
-        } else {
-            for (let i = 0, len = collection.length; i < len; i++) {
-                callback.call(scope, collection[i], i, collection);
-            }
-        }
-    };
-
-    /**
-     * Merge defaults with user options
-     * @private
-     * @param {Object} defaults Default settings
-     * @param {Object} options User options
-     * @returns {Object} Merged values of defaults and options
-     */
-    const extend = function (defaults, options) {
-        var extended = {};
-        forEach(defaults, function (value, prop) {
-            extended[prop] = defaults[prop];
-        });
-        forEach(options, function (value, prop) {
-            extended[prop] = options[prop];
-        });
-        return extended;
-    };
-
-    /**
-     * Convert data-options attribute into an object of key/value pairs
-     * @private
-     * @param {String} options Link-specific options as a data attribute string
-     * @returns {Object}
-     */
-    const getDataOptions = function (options) {
-        return !options || !(typeof JSON === 'object' && typeof JSON.parse === 'function') ? {} : JSON.parse(options);
-    };
-
-    /**
-     * Get the closest matching element up the DOM tree
-     * @param {Element} elem Starting element
-     * @param {String} selector Selector to match against (class, ID, or data attribute)
-     * @return {Boolean|Element} Returns false if not match found
-     */
-    const getClosest = function (elem, selector) {
-        const firstChar = selector.charAt(0);
-        for (; elem && elem !== document; elem = elem.parentNode) {
-            if (firstChar === '.') {
-                if (elem.classList.contains(selector.substr(1))) {
-                    return elem;
-                }
-            } else if (firstChar === '#') {
-                if (elem.id === selector.substr(1)) {
-                    return elem;
-                }
-            } else if (firstChar === '[') {
-                if (elem.hasAttribute(selector.substr(1, selector.length - 2))) {
-                    return elem;
-                }
-            }
-        }
-        return false;
-    };
 
     // @todo Do something...
 
@@ -129,7 +59,7 @@
      */
     const eventHandler = function (event) {
         const toggle = event.target;
-        const closest = getClosest(toggle, '[data-some-selector]');
+        const closest = myPlugin.helpers.getClosest(toggle, '[data-some-selector]');
         if (closest) {
             // run methods
         }
@@ -185,7 +115,7 @@
         myPlugin.destroy();
 
         // Merge user options with defaults
-        settings = extend(defaults, options || {});
+        settings = myPlugin.helpers.extend(defaults, options || {});
 
         // Add class to HTML element to activate conditional CSS
         document.documentElement.classList.add(settings.initClass);
