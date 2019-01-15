@@ -21,7 +21,24 @@
     // Shared Variables
     //
 
-    const defaults = {};
+    const defaults = {
+        someVar: 123,
+        initClass: 'js-myplugin',
+        callbackOnInit: function() {
+        },
+        callbackBefore: function () {
+        },
+        callbackAfter: function () {
+        },
+        callbackOnInitArray: [
+            function () {
+                console.log('Init function callback array 1');
+            },
+            function () {
+                console.log('Init function callback array 2');
+            },
+        ],
+    };
 
 
     //
@@ -77,10 +94,32 @@
 
             // Code goes here...
 
+            // On Init callback
+            publicAPIs.callbackCall('Init');
         };
 
         // Initialize the plugin
         publicAPIs.init(options);
+
+        /**
+         * Call callback by name
+         * @public
+         * @param {String} callbackName callback's name
+         */
+        publicAPIs.callbackCall = function (callbackName) {
+            const callback = settings[`callbackOn${callbackName}`];
+            const callbackArray = settings[`callbackOn${callbackName}Array`];
+            if (typeof callback === 'function') {
+                callback.call(this);
+            }
+            if(helpers.isArray(callbackArray)) {
+                helpers.forEach(callbackArray, function(value, prop) {
+                    if (typeof callbackArray[prop] === 'function') {
+                        callbackArray[prop].call(this);
+                    }
+                }, this);
+            }
+        };
 
         // Return the public APIs
         return publicAPIs;

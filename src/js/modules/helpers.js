@@ -89,11 +89,21 @@ module.exports = {
     /**
      * Check if an item is an object
      * @private
-     * @param {Object} item The item to be checked
+     * @param {Object|Array} item The item to be checked
      * @returns {Boolean}
      */
     isObject: function (item) {
         return (item && typeof item === 'object' && !Array.isArray(item));
+    },
+
+    /**
+     * Check if an item is an array
+     * @private
+     * @param {Object|Array} item The item to be checked
+     * @returns {Boolean}
+     */
+    isArray: function (item) {
+        return (item && Array.isArray(item));
     },
 
     /**

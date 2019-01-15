@@ -38,7 +38,15 @@
         callbackBefore: function () {
         },
         callbackAfter: function () {
-        }
+        },
+        callbackOnInitArray: [
+            function () {
+                console.log('Init function callback array 1');
+            },
+            function () {
+                console.log('Init function callback array 2');
+            },
+        ],
     };
 
 
@@ -128,6 +136,28 @@
         // On Init callback
         if (typeof settings.callbackOnInit === 'function') {
             settings.callbackOnInit.call(this);
+        }
+
+        myPlugin.callbackCall('Init');
+    };
+
+    /**
+     * Call callback by name
+     * @public
+     * @param {String} callbackName callback's name
+     */
+    myPlugin.callbackCall = function (callbackName) {
+        const callback = settings[`callbackOn${callbackName}`];
+        const callbackArray = settings[`callbackOn${callbackName}Array`];
+        if (typeof callback === 'function') {
+            callback.call(this);
+        }
+        if(myPlugin.helpers.isArray(callbackArray)) {
+            myPlugin.helpers.forEach(callbackArray, function(value, prop) {
+                if (typeof callbackArray[prop] === 'function') {
+                    callbackArray[prop].call(this);
+                }
+            }, this);
         }
     };
 
