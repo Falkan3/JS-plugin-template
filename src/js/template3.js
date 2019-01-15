@@ -123,7 +123,7 @@
         myPlugin.destroy();
 
         // Merge user options with defaults
-        settings = myPlugin.helpers.extend(defaults, options || {});
+        settings = myPlugin.helpers.mergeDeep(defaults, options || {});
 
         // Add class to HTML element to activate conditional CSS
         document.documentElement.classList.add(settings.initClass);

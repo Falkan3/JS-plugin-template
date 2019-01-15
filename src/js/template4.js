@@ -90,7 +90,7 @@
         publicAPIs.init = function (options) {
 
             // Merge options into defaults
-            settings = helpers.extend2(defaults, options || {});
+            settings = helpers.mergeDeep(defaults, options || {});
 
             // Code goes here...
 
