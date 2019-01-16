@@ -126,6 +126,8 @@ module.exports = {
                     Object.assign(output, {[key]: source[key]});
                 }
             });
+        } else {
+            output = source;
         }
         return output;
     },
