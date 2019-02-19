@@ -48,7 +48,8 @@
     //
     // Helpers
     //
-    const helpers = require('modules/helpers.js');
+    const Helpers = require('./modules/helpers.js');
+    const InternalHelper = require('./modules/internal_helper.js');
 
     //
     // Constructor
@@ -64,6 +65,11 @@
         const publicAPIs = {};
         let settings;
 
+        //
+        // Internal Helpers
+        //
+
+        let internalHelper;
 
         //
         // Unique Methods
@@ -90,7 +96,10 @@
         publicAPIs.init = function (options) {
 
             // Merge options into defaults
-            settings = helpers.mergeDeep(defaults, options || {});
+            settings = Helpers.mergeDeep(defaults, options || {});
+
+            // Initialize internal helpers
+            internalHelper = new InternalHelper(settings);
 
             // Code goes here...
 
@@ -112,8 +121,8 @@
             if (typeof callback === 'function') {
                 callback.call(this);
             }
-            if(helpers.isArray(callbackArray)) {
-                helpers.forEach(callbackArray, function(value, prop) {
+            if(Helpers.isArray(callbackArray)) {
+                Helpers.forEach(callbackArray, function(value, prop) {
                     if (typeof callbackArray[prop] === 'function') {
                         callbackArray[prop].call(this);
                     }
