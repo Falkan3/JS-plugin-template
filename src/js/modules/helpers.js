@@ -4,6 +4,34 @@ module.exports = {
     },
 
     /**
+     * Document readty event listener with callback
+     * @private
+     * @param {Function} callback - callback to be called
+     */
+    DOMReady: function (callback) {
+        if (document.readyState === "loading") {
+            document.addEventListener('DOMContentLoaded', callback);
+        }
+        else {
+            callback();
+        }
+    },
+
+    /**
+     * Window load event listener with callback
+     * @private
+     * @param {Function} callback - callback to be called
+     */
+    windowReady: function (callback) {
+        if (document.readyState === 'complete') {
+            callback();
+        }
+        else {
+            window.addEventListener('load', callback);
+        }
+    },
+
+    /**
      * A simple forEach() implementation for Arrays, Objects and NodeLists
      * @private
      * @param {Array|Object|NodeList} collection Collection of items to iterate
